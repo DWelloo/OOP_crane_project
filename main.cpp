@@ -5,22 +5,28 @@ using namespace std;
 int main()
 {
     string r="############################################";
-    int a,b;
+    int a,b,f;
     List<int> list;
+    List<int> list2;
     while(true)
     {
         cout<<"Wybierz funkcję:\n[1]dodanie obiektu\n[2]usunięcie wybranego obiektu\n";
         cout<<"[3]usunięcie wszystkich obiektów\n[4]wypisanie wszystkich obiektów\n";
         cout<<"[5]zapis do pliku\n[6]odczyt z pliku\n[7]porównaj\n[8]przesuń obiekt na początek\n";
-        cout<<"[9]czy_zawiera\n[10]\n[11]Wyjście"<<endl;
+        cout<<"[9]czy_zawiera\n[10]podstaw\n[11]Wyjście"<<endl;
         cin>>a;
         switch(a)
         {
         case 1:
             cout<<endl;
+            cout<<"Wybierz listę do dodania obiektu"<<endl;
+            cin>>f;
             cout<<"Podaj obiekt do dodania"<<endl;
             cin>>b;
+            if(f==1)
             list.add(b);
+            else
+                list2.add(b);
             cout<<r<<endl;
             break;
         case 2:
@@ -38,6 +44,8 @@ int main()
         case 4:
             cout<<endl;
             list.w_out();
+            cout<<endl;
+            list2.w_out();
             cout<<r<<endl;
             break;
         case 5:
@@ -45,6 +53,7 @@ int main()
         case 6:
             break;
         case 7:
+            cout<<list.operator==(list2)<<endl;
             break;
         case 8:
             cout<<endl;
@@ -61,6 +70,7 @@ int main()
             cout<<r<<endl;
             break;
         case 10:
+            list.operator=(list2);
             break;
         case 11:
             return 0;

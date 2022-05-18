@@ -128,10 +128,42 @@ public:
         }
         return false;
     };
-    List& operator=(const List&l);
+    List& operator=(const List&l)
+    {
+        if(*this==l)
+        {
+            return *this;
+        }
+        if(l.size==0)
+        {
+            this->del_all();
+            return *this;
+        }
+        Node *tmp=new Node();
+        tmp=l.first;
+        while(tmp)
+        {
+        this->add(tmp->object);
+        tmp=tmp->next;
+        }
+        return *this;
+        /*Node *tmp=new Node();
+        if(this->first==nullptr)
+        {
+            this->first=tmp;
+        }
+        Node *tmp_l=l.first;
+        while(tmp_l)
+        {
+            tmp->object=tmp_l->object;
+            tmp->next=new Node();
+            tmp=tmp->next;
+            tmp_l=tmp_l->next;
+        }*/
+    };
     bool operator==(const List&l)
     {
-        if(this->size!=l->size)
+        if(this->size!=l.size)
         {
             return false;
         }
@@ -139,7 +171,8 @@ public:
         {
             return true;
         }
-        Node* tmp_t,tmp_l;
+        Node* tmp_t;
+        Node* tmp_l;
         tmp_t=this->first;
         tmp_l=l.first;
         while(tmp_t)
