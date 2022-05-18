@@ -4,33 +4,65 @@
 using namespace std;
 int main()
 {
+    string r="############################################";
     int a,b;
-    project::List<int> list;
+    List<int> list;
     while(true)
     {
         cout<<"Wybierz funkcję:\n[1]dodanie obiektu\n[2]usunięcie wybranego obiektu\n";
-        cout<<"[3]usunięcie wszystkich obiektów\n[4]wypisanie wszystkich obiektów";
-        cout<<"[5]zapis do pliku\n[6]odczyt z pliku\n[7]Wyjście"<<endl;
+        cout<<"[3]usunięcie wszystkich obiektów\n[4]wypisanie wszystkich obiektów\n";
+        cout<<"[5]zapis do pliku\n[6]odczyt z pliku\n[7]porównaj\n[8]przesuń obiekt na początek\n";
+        cout<<"[9]czy_zawiera\n[10]\n[11]Wyjście"<<endl;
         cin>>a;
         switch(a)
         {
         case 1:
-            break;
-        case 2:
+            cout<<endl;
             cout<<"Podaj obiekt do dodania"<<endl;
             cin>>b;
             list.add(b);
+            cout<<r<<endl;
+            break;
+        case 2:
+            cout<<endl;
+            cout<<"Wybierz indeks obiektu do usunięcia"<<endl;
+            cin>>b;
+            list.del(b);
+            cout<<r<<endl;
             break;
         case 3:
-            list.w_out();
+            cout<<endl;
+            list.del_all();
+            cout<<r<<endl;
             break;
         case 4:
+            cout<<endl;
+            list.w_out();
+            cout<<r<<endl;
             break;
         case 5:
             break;
         case 6:
             break;
         case 7:
+            break;
+        case 8:
+            cout<<endl;
+            cout<<"Wybierz indeks obiektu do przesunięcia"<<endl;
+            cin>>b;
+            list.move_front(b);
+            cout<<r<<endl;
+            break;
+        case 9:
+            cout<<endl;
+            cout<<"Wybierz obiekt do szukania"<<endl;
+            cin>>b;
+            cout<<list.contains(b)<<endl;
+            cout<<r<<endl;
+            break;
+        case 10:
+            break;
+        case 11:
             return 0;
         }
     }

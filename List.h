@@ -3,9 +3,7 @@
 #include <iostream>
 #include <string>
 using namespace std;
-namespace project
-{
-    template<class T>
+template<class T>
 class List
 {
 public:
@@ -17,8 +15,22 @@ public:
     class Node
     {
     public:
-        Node();
-        ~Node();
+        ~Node()
+        {
+            if(this->prev&&this->next)
+            {
+                this->prev->next=this->next;
+                this->next->prev=this->prev;
+            }
+            else if(!this->next&&this->prev)
+            {
+                this->prev->next=nullptr;
+            }
+            else if(!this->prev&&this->next)
+            {
+                this->next->prev=nullptr;
+            }
+        };
         T object;
         Node* next=nullptr;
         Node* prev=nullptr;
@@ -40,46 +52,109 @@ public:
             {
                 tmp=tmp->next;
             }
-                //tmp->next->next=nullptr;
                 tmp->next=n_node;
-                //tmp->next->prev=tmp;
                 n_node->prev=tmp;
         }
+        this->size++;
     };
     void del(int a)
     {
-        T *tmp;
-        for(int i=-1;i<a;++i)
+        Node *tmp=this->first;
+        int i=0;
+        if(a==i)
         {
-            tmp=this->first;
             this->first=this->first->next;
         }
+        while(i<a)
+        {
+            tmp=tmp->next;
+            ++i;
+        };
         delete tmp;
+        this->size--;
     };
     void del_all()
     {
         Node* tmp;
-        while(!this->first)
+        while(this->first)
         {
             tmp=this->first;
             this->first=this->first->next;
             delete tmp;
         }
+        this->size=0;
     };
     void w_out()
     {
         Node* tmp=this->first;
-        while(tmp->next)
+        while(tmp)
         {
-            cout<<tmp->object;
+            cout<<tmp->object<<endl;
             tmp=tmp->next;
         }
     };
-    void rplace(T,T);
-    void move_front();
-    void move_back();
+    void rplace(T x,T y);
+    void move_front(int a)
+    {
+        Node *tmp=this->first;
+        int i=0,j=0;
+        T y,x=this->first->object;
+        do
+        {
+            tmp=tmp->next;
+            ++i;
+        }while(i<a);
+        this->first->object=tmp->object;
+        tmp=this->first->next;
+        while(j<a)
+        {
+            y=tmp->object;
+            tmp->object=x;
+            x=y;
+            tmp=tmp->next;
+            j++;
+        }
+    };
+    bool contains(T& t)
+    {
+        Node *tmp=this->first;
+        while(tmp)
+        {
+            if(tmp->object==t)
+            {
+                return true;
+            }
+            tmp=tmp->next;
+        }
+        return false;
+    };
+    List& operator=(const List&l);
+    bool operator==(const List&l)
+    {
+        if(this->size!=l->size)
+        {
+            return false;
+        }
+        if(this->size==0||l.size==0)
+        {
+            return true;
+        }
+        Node* tmp_t,tmp_l;
+        tmp_t=this->first;
+        tmp_l=l.first;
+        while(tmp_t)
+        {
+            if(tmp_t->object!=tmp_l->object)
+            {
+                return false;
+            }
+            tmp_t=tmp_t->next;
+            tmp_l=tmp_l->next;
+        };
+        return true;
+    };
+    //void find(int a);
     Node* first=nullptr;
     int size=0;
 };
-}
 #endif //LIST_H
