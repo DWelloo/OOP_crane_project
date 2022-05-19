@@ -49,8 +49,10 @@ int main()
             cout<<r<<endl;
             break;
         case 5:
+            list.zapisz_do_pliku();
             break;
         case 6:
+            list.wczytaj_z_pliku();
             break;
         case 7:
             cout<<list.operator==(list2)<<endl;

@@ -14,6 +14,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 
-add_executable(Projekt_3_Kontener main.cpp List.h)
+add_executable(Projekt_3_Kontener main.cpp List.h Klasa_MB.h Klasa_M.h Klasa_MM.h Klasa_D.h
+    Klasa_DK.h Klasa_DZ.h)
 
 target_link_libraries(Projekt_3_Kontener Qt${QT_VERSION_MAJOR}::Core)

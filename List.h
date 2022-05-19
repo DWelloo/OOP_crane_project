@@ -2,6 +2,7 @@
 #define LIST_H
 #include <iostream>
 #include <string>
+#include <fstream>
 using namespace std;
 template<class T>
 class List
@@ -31,6 +32,16 @@ public:
                 this->next->prev=nullptr;
             }
         };
+        friend ostream& operator<<(ostream &ofs,Node &node)
+        {
+            ofs<<node.object;
+            return ofs;
+        };
+        friend istream& operator>>(istream &ifs,Node &node)
+        {
+            ifs>>node.object;
+            return ifs;
+        }
         T object;
         Node* next=nullptr;
         Node* prev=nullptr;
@@ -147,19 +158,6 @@ public:
         tmp=tmp->next;
         }
         return *this;
-        /*Node *tmp=new Node();
-        if(this->first==nullptr)
-        {
-            this->first=tmp;
-        }
-        Node *tmp_l=l.first;
-        while(tmp_l)
-        {
-            tmp->object=tmp_l->object;
-            tmp->next=new Node();
-            tmp=tmp->next;
-            tmp_l=tmp_l->next;
-        }*/
     };
     bool operator==(const List&l)
     {
@@ -186,6 +184,36 @@ public:
         };
         return true;
     };
+    void zapisz_do_pliku()
+    {
+        ofstream ofs;
+        Node *tmp=this->first;
+        ofs.open("Plik.txt");
+        if(ofs.good())
+        {
+            while(tmp)
+            {
+                ofs<<*tmp<<endl;
+                tmp=tmp->next;
+            }
+        }
+        ofs.close();
+    };
+    void wczytaj_z_pliku()
+    {
+        ifstream ifs;
+        Node *tmp=this->first;
+        ifs.open("Plik.txt");
+        if(ifs.good())
+        {
+            while(tmp)
+            {
+                ifs>>*tmp;
+                tmp=tmp->next;
+            }
+        }
+        ifs.close();
+    }
     //void find(int a);
     Node* first=nullptr;
     int size=0;
