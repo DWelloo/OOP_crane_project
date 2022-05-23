@@ -59,7 +59,7 @@ public:
         else
         {
             Node* tmp=this->first;
-            while(tmp->next!=nullptr)
+            while(tmp->next)
             {
                 tmp=tmp->next;
             }
@@ -70,6 +70,8 @@ public:
     };
     void del(int a)
     {
+        try{
+        if(a<0||a>this->size-1)throw range_error("Błąd:Indeks spoza zakresu");
         Node *tmp=this->first;
         int i=0;
         if(a==i)
@@ -83,6 +85,7 @@ public:
         };
         delete tmp;
         this->size--;
+        }catch(range_error s){cout<<s.what()<<endl;return;};
     };
     void del_all()
     {
@@ -104,7 +107,23 @@ public:
             tmp=tmp->next;
         }
     };
-    void rplace(T x,T y);
+    void rplace(int x,int y)
+    {
+        try{
+            if(x==y)throw domain_error("Kontener jest pusty");
+            if(x<0||y<0||x>this->size-1||y>this->size-1)throw invalid_argument("Indeks spoza zasięgu");
+        Node *tmp_x=this->first;
+        Node *tmp_y=this->first;
+        Node *tmp_obj=new Node();
+        int i=0;
+        while(i<x)tmp_x=tmp_x->next;
+        i=0;
+        while(i<y)tmp_y=tmp_y->next;
+        tmp_obj->object=tmp_x->object;
+        tmp_x->object=tmp_y->object;
+        tmp_y->object=tmp_obj->object;
+        }catch(invalid_argument s){cout<<s.what()<<endl;return;}catch(domain_error s){cout<<s.what()<<endl;return;};
+    };
     void move_front(int a)
     {
         Node *tmp=this->first;
@@ -186,6 +205,8 @@ public:
     };
     void zapisz_do_pliku()
     {
+        try{
+            if(!this->first)throw domain_error("Kontener jest pusty");
         ofstream ofs;
         Node *tmp=this->first;
         ofs.open("Plik.txt");
@@ -193,28 +214,37 @@ public:
         {
             while(tmp)
             {
-                ofs<<*tmp<<endl;
+                ofs<<tmp->object<<endl;
+                if(ofs.fail())
+                {
+                    break;
+                }
                 tmp=tmp->next;
             }
         }
+        delete tmp;
         ofs.close();
+        }catch(domain_error s){cout<<s.what()<<endl;return;};
     };
     void wczytaj_z_pliku()
     {
+        if(this->first)this->del_all();
         ifstream ifs;
-        Node *tmp=this->first;
+        Node *tmp=new Node();
+        this->first=tmp;
         ifs.open("Plik.txt");
-        if(ifs.good())
+        while(ifs.good())
         {
-            while(tmp)
+            ifs>>tmp->object;
+            if(ifs.fail())
             {
-                ifs>>*tmp;
-                tmp=tmp->next;
+                delete tmp;
+                break;
             }
-        }
-        ifs.close();
+            this->add(tmp->object);
+            tmp=tmp->next;
+        }ifs.close();
     }
-    //void find(int a);
     Node* first=nullptr;
     int size=0;
 };

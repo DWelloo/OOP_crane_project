@@ -8,17 +8,17 @@ using namespace std;
 class Maszyna
 {
 public:
-    virtual void zapisz_do_pliku()=0;
-    ///deklaracja metody abstrakcyjnej klasy Maszyna
-    virtual void wczytaj_z_pliku(int)=0;
-    ///deklaracja metody abstrakcyjnej klasy Maszyna
+    /*virtual void zapisz_do_pliku()=0;
+    virtual void wczytaj_z_pliku(int)=0;*/
     virtual void dodaj_obiekt()=0;
-    ///deklaracja metody abstrakcyjnej klasy Maszyna
     virtual void wypisz_obiekt()=0;
-    ///deklaracja konstruktora domyślnego klasy Maszyna
-    Maszyna();
-    ///Destruktor domyślny klasy Maszyna
-    virtual ~Maszyna();
+    virtual string podaj_klase(){return "Maszyna";};
+    void wyswietl_katalog_klasy()
+    {
+        cout<<"Nie istnieje katalog dla klasy abstrakcyjnej";
+    };
+    Maszyna(){};
+    virtual ~Maszyna(){};
 protected:
     char czy_stacjonarny='-';
     string typ_maszyny="-";
