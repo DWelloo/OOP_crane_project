@@ -59,12 +59,9 @@ public:
         else
         {
             Node* tmp=this->first;
-            while(tmp->next)
-            {
-                tmp=tmp->next;
-            }
-                tmp->next=n_node;
-                n_node->prev=tmp;
+            while(tmp->next)tmp=tmp->next;
+            tmp->next=n_node;
+            n_node->prev=tmp;
         }
         this->size++;
     };
@@ -74,10 +71,7 @@ public:
         if(a<0||a>this->size-1)throw range_error("Błąd:Indeks spoza zakresu");
         Node *tmp=this->first;
         int i=0;
-        if(a==i)
-        {
-            this->first=this->first->next;
-        }
+        if(a==i)this->first=this->first->next;
         while(i<a)
         {
             tmp=tmp->next;
@@ -87,6 +81,31 @@ public:
         this->size--;
         }catch(range_error s){cout<<s.what()<<endl;return;};
     };
+    void insert(T object,int indeks)
+    {
+        try{
+        if(this->size==0||indeks==this->size)add(object);
+        else if(indeks<0||indeks>this->size)throw invalid_argument("Indeks spoza zakresu");
+        else
+        {
+            Node *tmp=this->first;
+            T tmp_mved;
+            T tmp_mnext;
+            for(int i=0;i<indeks;i++)tmp=tmp->next;
+            tmp_mved=tmp->object;
+            tmp->object=object;
+            tmp=tmp->next;
+            while(tmp)
+            {
+                tmp_mnext=tmp->object;
+                tmp->object=tmp_mved;
+                tmp_mved=tmp_mnext;
+                tmp=tmp->next;
+            }
+            this->add(tmp_mved);
+        }
+        }catch(invalid_argument s){cout<<s.what()<<endl;return;}
+    }
     void del_all()
     {
         Node* tmp;
@@ -160,11 +179,8 @@ public:
     };
     List& operator=(const List&l)
     {
-        if(*this==l)
-        {
-            return *this;
-        }
-        if(l.size==0)
+        if(*this==l)return *this;
+        if(l.size==0) //zapytać prowadzącego
         {
             this->del_all();
             return *this;
@@ -180,24 +196,15 @@ public:
     };
     bool operator==(const List&l)
     {
-        if(this->size!=l.size)
-        {
-            return false;
-        }
-        if(this->size==0||l.size==0)
-        {
-            return true;
-        }
+        if(this->size!=l.size)return false;
+        if(this->size==0&&l.size==0)return true;
         Node* tmp_t;
         Node* tmp_l;
         tmp_t=this->first;
         tmp_l=l.first;
         while(tmp_t)
         {
-            if(tmp_t->object!=tmp_l->object)
-            {
-                return false;
-            }
+            if(tmp_t->object!=tmp_l->object)return false;
             tmp_t=tmp_t->next;
             tmp_l=tmp_l->next;
         };
@@ -209,16 +216,13 @@ public:
             if(!this->first)throw domain_error("Kontener jest pusty");
         ofstream ofs;
         Node *tmp=this->first;
-        ofs.open("Plik.txt");
+        ofs.open("Plik.txt"); //if (ofs.bad())throw
         if(ofs.good())
         {
             while(tmp)
             {
                 ofs<<tmp->object<<endl;
-                if(ofs.fail())
-                {
-                    break;
-                }
+                if(ofs.fail())break;
                 tmp=tmp->next;
             }
         }
@@ -232,7 +236,7 @@ public:
         ifstream ifs;
         Node *tmp=new Node();
         this->first=tmp;
-        ifs.open("Plik.txt");
+        ifs.open("Plik.txt"); // if(ifs.bad())throw       / while(true)
         while(ifs.good())
         {
             ifs>>tmp->object;
