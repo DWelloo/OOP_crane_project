@@ -29,6 +29,9 @@ public:
             this->typ_maszyny="Moździerz";
             this->czy_wystrzeliwuje_pociski='1';
             break;
+        default:
+            throw string("Niepoprawny wybór");
+            break;
         }
         if(czy_wystrzeliwuje_pociski=='1')
         {
@@ -72,7 +75,11 @@ public:
         }
         return false;
     }
-
+    bool operator==(const M_militar &m)
+    {
+        if(this!=&m)return false;
+        return true;
+    }
 private:
     string panstwo_kontrahent="-";
     char czy_wystrzeliwuje_pociski='0';

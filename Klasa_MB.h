@@ -29,7 +29,14 @@ public:
         cout<<"Podaj rok produkcji: ";
         cin>>rok_produkcji;
         cout<<"Czy ta maszyna jest stacjonarna? [T]/[N]: ";
+        while(true)
+        {
         cin>>czy_stacjonarny;
+        if(czy_stacjonarny=='T'||czy_stacjonarny=='N'||czy_stacjonarny=='t'||czy_stacjonarny=='n')
+            break;
+        else
+            cout<<"Niepoprawny znak. Spróbuj ponownie"<<endl;
+        }
         if(czy_stacjonarny=='t')czy_stacjonarny='T';
         if(czy_stacjonarny=='n')czy_stacjonarny='N';
         cout<<"Wybierz typ maszyny:"<<endl;
@@ -46,12 +53,15 @@ public:
         case 3:
             this->typ_maszyny="Spycharka";
             break;
+        default:
+            throw string("Niepoprawny wybór");
+            break;
         }
     };
     void wypisz_obiekt(){cout<<*this;};
     friend ostream& operator<<(ostream &ofs,M_budowla &m)
     {
-        ofs<<m.typ_maszyny<<" "<<m.nazwa_firmy<<" "<<m.rok_produkcji<<" "<<m.czy_stacjonarny<<endl;
+        ofs<<m.typ_maszyny<<" "<<m.nazwa_firmy<<" "<<m.rok_produkcji<<" "<<m.czy_stacjonarny;
         return ofs;
     };
     friend istream& operator>>(istream &ifs,M_budowla &m)
@@ -67,6 +77,11 @@ public:
         }
         return false;
     };
+    bool operator==(const M_budowla &m)
+    {
+        if(this!=&m)return false;
+        return true;
+    }
 protected:
     string nazwa_firmy="-";
     int rok_produkcji=0;

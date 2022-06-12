@@ -6,25 +6,62 @@ using namespace std;
 class Kierowca
 {
 public:
-    ///deklaracja konstruktora domyślnego klasy Kierowca
-    Kierowca();
-    ///deklaracja konstruktora z parametrami klasy Kierowca
-    Kierowca(string,string,float);
-    ///deklaracja konstruktora kopiującego klasy Kierowca
-    Kierowca(const Kierowca&);
-    ///deklaracja przeciążenia operatora porównania klasy Kierowca
-    bool operator==(const Kierowca &a);
-    ///deklaracja przeciążenia operatora wypisania na strumień klasy Kierowca
-    friend ostream& operator<<(ostream&,Kierowca&);
-    ///deklaracja przeciążenia operatora zapisu klasy Kierowca
-    friend istream& operator>>(istream&,Kierowca&);
-    ///deklaracja metody klasy Kierowca
-    void wyswietl_kierowce();
-    ///deklaracja metody klasy Kierowca
-    void dodaj_kierowce();
-    ///deklaracja destruktora klasy Kierowca
-    ~Kierowca();
-    ///początek deklaracji pól klasy Kierowca
+    Kierowca(){};
+    Kierowca(string imie,string nazwisko,float exp)
+    {
+        this->imie=imie;
+        this->nazwisko=nazwisko;
+        this->lat_doswiadczenia=exp;
+    };
+    Kierowca(const Kierowca &o)
+    {
+        this->imie=o.imie;
+        this->nazwisko=o.nazwisko;
+        this->lat_doswiadczenia=o.lat_doswiadczenia;
+    };
+    Kierowca operator=(const Kierowca &o)
+    {
+        Kierowca (*tmp);
+        this->imie=o.imie;
+        this->nazwisko=o.nazwisko;
+        this->lat_doswiadczenia=o.lat_doswiadczenia;
+        return *tmp;
+    }
+    bool operator==(const Kierowca &a)
+    {
+        if(this==&a)
+        {
+            return true;
+        }
+        if(this->imie!=a.imie&&this->nazwisko!=a.nazwisko&&this->lat_doswiadczenia!=a.lat_doswiadczenia)
+        {
+            return false;
+        }
+        return true;
+    };
+    friend ostream& operator<<(ostream &ofs,Kierowca &o)
+    {
+        ofs<<o.imie<<" "<<o.nazwisko<<" "<<o.lat_doswiadczenia<<endl;
+        return ofs;
+    };
+    friend istream& operator>>(istream &ifs,Kierowca &o)
+    {
+        ifs>>o.imie>>o.nazwisko>>o.lat_doswiadczenia;
+        return ifs;
+    };
+    void wyswietl_kierowce()
+    {
+        cout<<imie<<" "<<nazwisko<<endl;
+        cout<<lat_doswiadczenia<<endl;
+    };
+    void dodaj_kierowce()
+    {
+        cout<<"Podaj imie i nazwisko: ";
+        cin>>imie>>nazwisko;
+        cout<<"Podaj doświadczenie: ";
+        cin>>lat_doswiadczenia;
+    };
+    ~Kierowca(){};
     string imie="-";
     string nazwisko="-";
     float lat_doswiadczenia=0;

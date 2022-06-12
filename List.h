@@ -9,10 +9,7 @@ class List
 {
 public:
     List(){};
-    ~List()
-    {
-        this->del_all();
-    };
+    ~List(){this->del_all();};
     class Node
     {
     public:
@@ -84,7 +81,11 @@ public:
     void insert(T object,int indeks)
     {
         try{
-        if(this->size==0||indeks==this->size)add(object);
+        if(this->size==0||indeks==this->size)
+        {
+            add(object);
+            return;
+        }
         else if(indeks<0||indeks>this->size)throw invalid_argument("Indeks spoza zakresu");
         else
         {
@@ -129,15 +130,24 @@ public:
     void rplace(int x,int y)
     {
         try{
-            if(x==y)throw domain_error("Kontener jest pusty");
+            if(x==y)throw invalid_argument("Indeksy są takie same; operacja nie ma sensu");
+            if(this->size==0)throw domain_error("Kontener jest pusty");
             if(x<0||y<0||x>this->size-1||y>this->size-1)throw invalid_argument("Indeks spoza zasięgu");
         Node *tmp_x=this->first;
         Node *tmp_y=this->first;
         Node *tmp_obj=new Node();
         int i=0;
-        while(i<x)tmp_x=tmp_x->next;
+        while(i<x)
+        {
+            tmp_x=tmp_x->next;
+            i++;
+        }
         i=0;
-        while(i<y)tmp_y=tmp_y->next;
+        while(i<y)
+        {
+            tmp_y=tmp_y->next;
+            i++;
+        }
         tmp_obj->object=tmp_x->object;
         tmp_x->object=tmp_y->object;
         tmp_y->object=tmp_obj->object;

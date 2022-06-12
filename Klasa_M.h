@@ -4,6 +4,8 @@
 #include <fstream>
 #include <typeinfo>
 #include <ios>
+#include "Klasa_DK.h"
+#include <vector>
 using namespace std;
 class Maszyna
 {
@@ -22,5 +24,6 @@ public:
 protected:
     char czy_stacjonarny='-';
     string typ_maszyny="-";
+    vector<Kierowca> kierowcy;
 };
 #endif // KLASA_M_H
